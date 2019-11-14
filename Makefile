@@ -6,7 +6,7 @@ VERSION="$(DATE)-$(LAST_COMMIT)"
 LDFLAGS := -X github.com/$(GH_OWNER)/$(APP)/pkg/version.Revision=$(shell git rev-parse --short HEAD) -X github.com/$(GH_OWNER)/$(APP)/pkg/version.Version=$(VERSION)
 
 build:
-	go build ./...
+	go build .
 
 build-linux:
 	go build -a -installsuffix cgo -o $(APP) -ldflags "-s $(LDFLAGS)"
