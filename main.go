@@ -6,16 +6,16 @@ import (
 	"net/http"
 )
 
-const BindHost = "127.0.0.1"
-
 var (
-	port            int
+	hostname        string
 	defaultResponse string
+	port            int
 )
 
 func init() {
-	flag.IntVar(&port, "p", 8080, "port where http requests are served")
-	flag.StringVar(&defaultResponse, "default-response", "", "what to respond when receiving requests")
+	flag.StringVar(&hostname, "h", "127.0.0.1", "hostname used to serve requests")
+	flag.IntVar(&port, "p", 8080, "port used to serve requests")
+	flag.StringVar(&defaultResponse, "default-response", "yes\n", "what to respond when recpinged")
 	flag.Parse()
 }
 
@@ -25,7 +25,7 @@ func main() {
 		fmt.Fprint(w, defaultResponse)
 	})
 
-	bindAddr := fmt.Sprintf("%s:%d", BindHost, port)
+	bindAddr := fmt.Sprintf("%s:%d", hostname, port)
 	fmt.Println("running @", bindAddr)
 	fmt.Println((&http.Server{Addr: bindAddr}).ListenAndServe())
 }
